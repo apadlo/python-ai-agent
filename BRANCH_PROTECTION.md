@@ -20,6 +20,7 @@ To configure these settings, go to your repository on GitHub:
   - Require branches to be up to date before merging
   - Status checks that are required:
     - `lint-and-test` (from the CI workflow)
+    - `check-pr` (from the Branch Protection Check workflow)
 
 #### Advanced Protections
 - ✅ **Require conversation resolution before merging**
@@ -41,9 +42,11 @@ To configure these settings, go to your repository on GitHub:
 ## GitHub Workflows
 
 The repository includes a CI workflow (`.github/workflows/ci.yml`) that runs the following checks:
-- **Code linting** with flake8 to catch syntax errors and code quality issues
-- **Code formatting** checks with black
-- **Python syntax verification** to ensure all Python files compile successfully
+- **Code linting** with flake8 to catch syntax errors and code quality issues (required)
+- **Code formatting** checks with black (informational only)
+- **Python syntax verification** to ensure all Python files compile successfully (required)
+
+The repository also includes a branch protection check workflow (`.github/workflows/branch-protection-check.yml`) that validates pull requests.
 
 These checks run automatically on:
 - Every push to the `main` branch
