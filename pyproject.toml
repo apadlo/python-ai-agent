@@ -5,4 +5,11 @@ requires-python = ">=3.10"
 dependencies = [
   "fastapi>=0.121.0",
   "uvicorn>=0.34.0",
+  "jinja2",
+  "langchain",
+  "langchain-core",
+  "langchain-openai",
+  "langgraph",
+  "python-dotenv",
+  "pydantic",
 ]
