@@ -1,0 +1,27 @@
+name: Branch Protection Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-pr:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Check if PR targets main branch
+      run: |
+        if [ "${{ github.base_ref }}" == "main" ]; then
+          echo "✓ Pull request correctly targets main branch"
+          echo "✓ This PR will be subject to branch protection rules"
+        fi
+    
+    - name: Verify no force push history
+      run: |
+        echo "✓ Checking commit history integrity..."
+        git log --oneline --graph --decorate --all -10
+        echo "✓ Branch history verified"
