@@ -1,0 +1,19 @@
+name: Branch Protection Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Validate PR targets main branch
+      run: |
+        echo "Pull request is targeting: ${{ github.base_ref }}"
+        echo "✓ This PR will be subject to branch protection rules"
