@@ -1,0 +1,46 @@
+.vercel/
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Packaging caches
+pip-wheel-metadata/
+
+# Test and coverage output
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+
+# Type checker and lint caches
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+
+# IDEs and editors
+.idea/
+.idea/*
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+
+
+.vercel
