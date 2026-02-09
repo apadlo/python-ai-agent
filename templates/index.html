@@ -36,6 +36,32 @@
             border-color: red;
             color: red;
         }
+
+        #download {
+            margin-top: 10px;
+        }
+
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #222;
+            background: #fafafa;
+        }
+
+        .download-link:hover {
+            background: #f0f0f0;
+        }
+
+        .download-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
     </style>
 </head>
 <body>
@@ -47,11 +73,13 @@
     </form>
 
     <div id="response"></div>
+    <div id="download"></div>
 
     <script>
         const form = document.getElementById('agentForm');
         const promptInput = document.getElementById('prompt');
         const responseDiv = document.getElementById('response');
+        const downloadDiv = document.getElementById('download');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -59,6 +87,7 @@
             responseDiv.style.display = 'block';
             responseDiv.className = '';
             responseDiv.textContent = 'Loading...';
+            downloadDiv.textContent = '';
 
             try {
                 const response = await fetch('/agent', {
@@ -71,6 +100,18 @@
 
                 if (response.ok) {
                     responseDiv.textContent = data.response;
+                    if (data.download_url) {
+                        const link = document.createElement('a');
+                        link.href = data.download_url;
+                        link.className = 'download-link';
+                        link.innerHTML = `
+                            <svg class="download-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M6 2h8l4 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V7h3.5L14 3.5zM12 9v6.17l2.59-2.58L16 14l-4 4-4-4 1.41-1.41L11 15.17V9h1z"/>
+                            </svg>
+                            <span>Download ${data.filename}</span>
+                        `;
+                        downloadDiv.appendChild(link);
+                    }
                 } else {
                     responseDiv.className = 'error';
                     responseDiv.textContent = 'Error: ' + (data.detail || 'Unknown error');

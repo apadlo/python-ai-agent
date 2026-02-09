@@ -1,8 +1,10 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
-from agent import run_agent
+from fastapi.responses import FileResponse
+from agent import run_agent, get_note_path
 from pathlib import Path
+from typing import Optional
 
 # import uvicorn
 
@@ -21,6 +23,8 @@ class AgentRequest(BaseModel):
 class AgentResponse(BaseModel):
     """Response model for agent invocation."""
     response: str
+    filename: Optional[str] = None
+    download_url: Optional[str] = None
 
 
 @app.get("/")
@@ -43,9 +47,22 @@ async def invoke_agent(request: AgentRequest):
         # Run the agent with the user's prompt
         result = run_agent(request.prompt)
 
-        return AgentResponse(response=result)
+        filename = result.get("filename")
+        download_url = f"/download/{filename}" if filename else None
+
+        return AgentResponse(response=result["response"], filename=filename, download_url=download_url)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error invoking agent: {str(e)}")
 
-# uvicorn.run(app, host="0.0.0.0", port=8000)
+
+@app.get("/download/{filename}")
+async def download_note(filename: str):
+    path = get_note_path(filename)
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="Note not found")
+    return FileResponse(path, filename=path.name, media_type="text/plain")
+
+
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
