@@ -1,6 +1,7 @@
 # 🤖 Python AI Agent
 
 A smart note-taking assistant powered by LangChain and OpenAI that can read and write text files based on natural language instructions.
+Available live at: https://deploy-ai-agent-tau.vercel.app/
 
 ## ✨ Features
 
