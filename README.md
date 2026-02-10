@@ -69,8 +69,7 @@ The application will be available at `http://localhost:8000`
 
 1. Open your browser and navigate to `http://localhost:8000`
 2. Enter natural language commands like:
-   - "Create a note called shopping.txt with milk, eggs, and bread"
-   - "Read the contents of shopping.txt"
+   - "Create a note describing 5 most common docker use cases"
    - "Write 'Remember to call mom' to reminder.txt"
 3. Download created notes using the download button
 
@@ -81,15 +80,15 @@ You can also interact with the API directly:
 ```bash
 curl -X POST http://localhost:8000/agent \
   -H "Content-Type: application/json" \
-  -d '{"prompt": "Create a note called todo.txt with: Buy groceries, Call dentist"}'
+  -d '{"prompt": "Create a note winners.txt with 10 latest FIFA world cup winners listed by year"}'
 ```
 
 **Response:**
 ```json
 {
-  "response": "Successfully wrote 30 characters to 'todo.txt'.",
-  "filename": "todo.txt",
-  "download_url": "/download/todo.txt"
+  "response": "Successfully wrote a note 'winners.txt'.",
+  "filename": "winners.txt",
+  "download_url": "/download/winnders.txt"
 }
 ```
 
